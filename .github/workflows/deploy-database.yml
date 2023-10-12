@@ -1,29 +1,36 @@
-name: Deploy Database
+name: PostgreSQL base datos
 
 on:
   push:
     branches:
-      - main # se deja general
+      - main
 
 jobs:
-  deploy-database:
+  test:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: jair-
+          POSTGRES_PASSWORD: 123123
+          POSTGRES_DB: db_supermercado #
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
     steps:
-    - name: Checkout Repositorio base de datos
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Set up PostgreSQL
-      uses: cortinico/setup-pg-wait@v1
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
 
-    - name: Create and Populate Database
-      run: |
-        echo "Creando tablas y consultas"
-        psql -U ${{ secrets.DB_USERNAME }} -d ${{ secrets.DB_NAME }} -h localhost -p 5432 -c "CREATE TABLE Proveedor_basico (id serial primary key, name text);"
-        psql -U ${{ secrets.DB_USERNAME }} -d ${{ secrets.DB_NAME }} -h localhost -p 5432 -c "SELECT * FROM proveedores;"
+      - name: Install dependencies
+        run: npm install
 
-    - name: Check Database
-      run: |
-        echo "Creando recursos"
-
-        psql -U ${{ secrets.DB_USERNAME }} -d ${{ secrets.DB_NAME }} -h localhost -p 5432 -c "SELECT * FROM proveedores ;"
+      - name: Run tests
+        run: npm test
