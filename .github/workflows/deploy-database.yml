@@ -1,0 +1,29 @@
+name: Deploy Database
+
+on:
+  push:
+    branches:
+      - main # Cambia esto según tu rama principal
+
+jobs:
+  deploy-database:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repositorio base de datos
+      uses: actions/checkout@v2
+
+    - name: Set up PostgreSQL
+      uses: cortinico/setup-pg-wait@v1
+
+    - name: Create and Populate Database
+      run: |
+        echo "Creando tablas y consultas"
+        psql -U ${{ secrets.DB_USERNAME }} -d ${{ secrets.DB_NAME }} -h localhost -p 5432 -c "CREATE TABLE Proveedor_basico (id serial primary key, name text);"
+        psql -U ${{ secrets.DB_USERNAME }} -d ${{ secrets.DB_NAME }} -h localhost -p 5432 -c "SELECT * FROM proveedores;"
+
+    - name: Check Database
+      run: |
+        echo "Creando recursos"
+
+        psql -U ${{ secrets.DB_USERNAME }} -d ${{ secrets.DB_NAME }} -h localhost -p 5432 -c "SELECT * FROM proveedores ;"
