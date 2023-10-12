@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
+    - name: Checkout Repositorio base de datos
       uses: actions/checkout@v2
 
     - name: Set up PostgreSQL
@@ -18,9 +18,12 @@ jobs:
 
     - name: Create and Populate Database
       run: |
-        psql -U ${{ secrets.DB_USERNAME }} -d ${{ secrets.DB_NAME }} -h localhost -p 5432 -c "CREATE TABLE example (id serial primary key, name text);"
-        psql -U ${{ secrets.DB_USERNAME }} -d ${{ secrets.DB_NAME }} -h localhost -p 5432 -c "INSERT INTO example (name) VALUES ('Example Data');"
+        echo "Creando tablas y usuarios"
+        psql -U ${{ secrets.DB_USERNAME }} -d ${{ secrets.DB_NAME }} -h localhost -p 5432 -c "CREATE TABLE Proveedor_basico (id serial primary key, name text);"
+        psql -U ${{ secrets.DB_USERNAME }} -d ${{ secrets.DB_NAME }} -h localhost -p 5432 -c "SELECT * FROM proveedores;"
 
     - name: Check Database
       run: |
-        psql -U ${{ secrets.DB_USERNAME }} -d ${{ secrets.DB_NAME }} -h localhost -p 5432 -c "SELECT * FROM example;"
+        echo "Creando recursos"
+
+        psql -U ${{ secrets.DB_USERNAME }} -d ${{ secrets.DB_NAME }} -h localhost -p 5432 -c "SELECT * FROM proveedores ;"
