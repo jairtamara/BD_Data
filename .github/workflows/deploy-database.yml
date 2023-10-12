@@ -3,7 +3,7 @@ name: Deploy Database
 on:
   push:
     branches:
-      - main # Cambia esto según tu rama principal
+      - main # se deja general
 
 jobs:
   deploy-database:
