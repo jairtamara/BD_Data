@@ -219,7 +219,7 @@ unique(nro_doc, tipo_doc);
 -- UNIQUE TELEFONO
 alter table clientes
 add constraint UNIQUE_clientes_nro_tel_princ
-unique(nro_tel_princ);
+unique(nro_tel_princ); -- pruebas
 
 
 
@@ -374,7 +374,7 @@ add constraint FK_productos_id_proveedor
 foreign key(id_proveedor)
 references proveedores(id) on delete cascade;
 
--- UNIQUE CÓDIGO
+-- UNIQUE Cï¿½DIGO
 alter table productos 
 add constraint UNIQUE_productos_codigo
 unique(codigo);
@@ -548,7 +548,7 @@ references clientes(id) on delete cascade;
 
 
 
--- ======== TODOS LOS ID´S PK DE LAS TABLAS COMO AUTO_INCREMENT =======
+-- ======== TODOS LOS IDï¿½S PK DE LAS TABLAS COMO AUTO_INCREMENT =======
 
 
 create sequence id_sec_provee ;
