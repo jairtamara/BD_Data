@@ -32,4 +32,10 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: CommitHawk
+        uses: jesalg/commit-hawk-action@v1.1
+        with:
+          slack_webhook_url: 'https://hooks.slack.com/services/XYZ'
+          slack_message: 'El contenido de archivo @@varArchivo + .sql ha sido modificado'  
+
     
